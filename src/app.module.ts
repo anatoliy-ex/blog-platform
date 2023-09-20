@@ -19,7 +19,6 @@ import { CommentOut, CommentSchema } from './shame/comment.Schema';
 import { settings } from '../.env/settings';
 import { TestingController } from './controllers/testing.controller';
 import { TestingRepositories } from './repositories/testing.repositories';
-//import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
