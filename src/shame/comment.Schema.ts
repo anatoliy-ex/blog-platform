@@ -1,5 +1,6 @@
 import { HydratedDocument } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { CommentatorInfo } from './user.Schema';
 
 export type CommentDocument = HydratedDocument<CommentOut>;
 
@@ -24,7 +25,7 @@ export class CommentOut {
   content: string;
 
   @Prop({ required: true })
-  commentatorInfo: string;
+  commentatorInfo: CommentatorInfo;
 
   @Prop({ required: true })
   email: string;
