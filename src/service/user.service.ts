@@ -28,7 +28,7 @@ export class UsersService {
     return this.usersRepositories.createUser(newUser);
   }
 
-  deleteUserById(id: string) {
-    return this.usersRepositories.deleteUserById(id);
+  deleteUserById(userId: string) {
+    return this.usersRepositories.deleteUserById(userId);
   }
 }

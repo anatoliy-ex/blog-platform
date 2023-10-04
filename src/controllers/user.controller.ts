@@ -31,6 +31,7 @@ export class UserController {
 
   @Delete(':id')
   deleteUserById(@Param('id') userId: string) {
+    console.log(userId);
     return this.usersService.deleteUserById(userId);
   }
 }

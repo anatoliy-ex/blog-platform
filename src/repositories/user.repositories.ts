@@ -51,8 +51,9 @@ export class UsersRepositories {
     };
   }
 
-  deleteUserById(id: string) {
-    const isDeleted = this.userModel.deleteOne({ id: id });
-    return !!isDeleted;
+  async deleteUserById(userId: string): Promise<boolean> {
+    const result = await this.userModel.deleteOne({ id: userId, __v: 0 });
+    console.log(result);
+    return !!result;
   }
 }
