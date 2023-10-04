@@ -19,6 +19,8 @@ import { CommentOut, CommentSchema } from './shame/comment.Schema';
 import { settings } from '../.env/settings';
 import { TestingController } from './controllers/testing.controller';
 import { TestingRepositories } from './repositories/testing.repositories';
+import { AllDataRepositories } from './repositories/all-data.repositories';
+import { AllDataController } from './controllers/all-data.controller';
 
 @Module({
   imports: [
@@ -37,6 +39,7 @@ import { TestingRepositories } from './repositories/testing.repositories';
     CommentController,
     //PostsController,
     TestingController,
+    AllDataController,
   ],
   providers: [
     AppService,
@@ -49,6 +52,7 @@ import { TestingRepositories } from './repositories/testing.repositories';
     //BlogsRepositories,
     //BlogsService,
     TestingRepositories,
+    AllDataRepositories,
   ],
 })
 export class AppModule {}
