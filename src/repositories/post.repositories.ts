@@ -22,7 +22,10 @@ import {
 import { PostsTypes, UserLikes, UserLikesView } from '../types/post.types';
 import { PaginationQueryTypeForPostsAndComments } from '../pagination/post.pagination';
 import { PostPutViewModel, OutputType } from '../types/blog.types';
-import { LikeStatusForCommentDocument } from '../shame/like.status.for.comment.Schema';
+import {
+  LikeStatusForCommentDbSchema,
+  LikeStatusForCommentDocument,
+} from '../shame/like.status.for.comment.Schema';
 
 @Injectable()
 export class PostsRepositories {
@@ -37,7 +40,7 @@ export class PostsRepositories {
     private userModel: Model<UserDocument>,
     @InjectModel(CommentOut.name)
     private commentModel: Model<CommentDocument>,
-    @InjectModel(CommentOut.name)
+    @InjectModel(LikeStatusForCommentDbSchema.name)
     private likeModelForComment: Model<LikeStatusForCommentDocument>,
   ) {}
   //update like and dislike status for post
