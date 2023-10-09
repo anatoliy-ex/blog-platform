@@ -1,5 +1,5 @@
 import { UsersRepositories } from '../repositories/user.repositories';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PaginationQueryTypeForUsers } from '../pagination/user.pagination';
 import { InputUserType } from '../types/user.confirm.types';
 import * as bcrypt from 'bcrypt';
@@ -28,7 +28,9 @@ export class UsersService {
     return this.usersRepositories.createUser(newUser);
   }
 
-  deleteUserById(userId: string) {
-    return this.usersRepositories.deleteUserById(userId);
+  async deleteUserById(userId: string) {
+    const isDeleted = await this.usersRepositories.deleteUserById(userId);
+    if (!isDeleted) throw new NotFoundException();
+    return isDeleted;
   }
 }

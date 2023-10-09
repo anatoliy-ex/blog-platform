@@ -1,3 +1,5 @@
+import { LikeStatusesEnum } from '../shame/comment.Schema';
+
 export type UserConfirmTypes = {
   id: string;
   login: string;
@@ -29,4 +31,30 @@ export type UserViewType = {
   login: string;
   email: string;
   createdAt: string;
+};
+
+export type TypeViewCommentModel<T, Y> = {
+  id: string;
+  content: string;
+  commentatorInfo: T;
+  createdAt: string;
+  postId: string;
+  likesInfo: Y;
+};
+
+export type TypeCommentatorInfo = {
+  userId: string;
+  userLogin: string;
+};
+
+export type TypeLikeAndDislikeInfo = {
+  likesCount: number;
+  dislikesCount: number;
+  myStatus: string;
+};
+
+export type LikeStatusUserForComment = {
+  commentId: string;
+  userStatus: LikeStatusesEnum;
+  userId: string;
 };

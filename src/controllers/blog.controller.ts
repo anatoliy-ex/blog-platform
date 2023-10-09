@@ -1,108 +1,127 @@
-// import { Delete, Injectable } from '@nestjs/common';
-// import { BlogsService } from '../service/blog.service';
-//
-// @Injectable()
-// export class BlogsController {
-//   constructor(protected blogsService: BlogsService) {}
-//
-//   async GetAllBlogs(req: Request, res: Response) {
-//     const pagination = getPaginationFromQueryBlogs(req.query);
-//     const allBlogs = await this.blogsService.allBlogs(pagination);
-//     res.status(200).send(allBlogs);
-//   }
-//
-//   async CreateNewBlog(req: Request, res: Response) {
-//     const newBlog: BlogsTypes = await this.blogsService.createNewBlog(req.body);
-//
-//     if (newBlog) {
-//       res.status(201).send(newBlog);
-//       return;
-//     } else {
-//       res.sendStatus(404);
-//       return;
-//     }
-//   }
-//
-//   async GetPostsForSpecifiedBlog(req: Request, res: Response) {
-//     const userId = req.user ? req.user.id : null;
-//     const foundBlog: BlogsTypes | null = await this.blogsService.getBlogById(
-//       req.params.blogId,
-//     );
-//
-//     if (foundBlog) {
-//       const pagination = getPaginationFromQueryPostsAndComments(req.query);
-//       const postsForBlog = await this.blogsService.getPostsForBlog(
-//         pagination,
-//         foundBlog.id,
-//         userId,
-//       );
-//
-//       res.status(200).send(postsForBlog);
-//       return;
-//     } else {
-//       res.sendStatus(404);
-//       return;
-//     }
-//   }
-//
-//   async CreateNewPostForSpecificBlog(req: Request, res: Response) {
-//     const foundBlog: BlogsTypes | null = await this.blogsService.getBlogById(
-//       req.params.blogId,
-//     );
-//
-//     if (foundBlog) {
-//       const newPostsForBlog: PostsTypes<UserLikes> =
-//         await this.blogsService.createPostForSpecificBlog(
-//           req.body,
-//           req.params.blogId,
-//           foundBlog.name,
-//         );
-//       res.status(201).send(newPostsForBlog);
-//       return;
-//     } else {
-//       res.sendStatus(404);
-//       return;
-//     }
-//   }
-//
-//   async GetBlogById(req: Request, res: Response) {
-//     const BlogWithId: BlogsTypes | null = await this.blogsService.getBlogById(
-//       req.params.id,
-//     );
-//
-//     if (BlogWithId) {
-//       res.status(200).send(BlogWithId);
-//       return;
-//     } else {
-//       res.sendStatus(404);
-//       return;
-//     }
-//   }
-//
-//   async UpdateBlogById(req: Request, res: Response) {
-//     const isUpdated = await this.blogsService.updateBlog(
-//       req.body,
-//       req.params.id,
-//     );
-//
-//     if (isUpdated) {
-//       res.sendStatus(204);
-//       return;
-//     } else {
-//       res.sendStatus(404);
-//       return;
-//     }
-//   }
-//
-//   async DeleteBlogById(req: Request, res: Response) {
-//     const isDelete = await this.blogsService.deleteBlogById(req.params.id);
-//
-//     if (isDelete) {
-//       res.sendStatus(204);
-//       return;
-//     } else {
-//       res.sendStatus(404);
-//       return;
-//     }
-//   }
-// }
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+  Put,
+  Query,
+  Headers,
+  HttpCode,
+} from '@nestjs/common';
+import { BlogsService } from '../service/blog.service';
+import {
+  getPaginationFromQueryBlogs,
+  PaginationQueryTypeForBlogs,
+} from '../pagination/blog.pagination';
+import { BlogsTypes, BlogViewType } from '../types/blog.types';
+import {
+  getPaginationFromQueryPostsAndComments,
+  PaginationQueryTypeForPostsAndComments,
+} from '../pagination/post.pagination';
+import { PostsTypes, PostViewType, UserLikes } from '../types/post.types';
+
+@Controller('blogs')
+export class BlogsController {
+  constructor(protected blogsService: BlogsService) {}
+
+  @Get()
+  async getAllBlogs(@Query() query: PaginationQueryTypeForBlogs) {
+    const paginationBlogs = getPaginationFromQueryBlogs(query);
+    return await this.blogsService.allBlogs(paginationBlogs);
+  }
+
+  @Post()
+  async createNewBlog(@Body() blogViewModel: BlogViewType) {
+    const newBlog: BlogsTypes = await this.blogsService.createNewBlog(
+      blogViewModel,
+    );
+
+    if (newBlog) {
+      return newBlog;
+    } else {
+      throw new NotFoundException();
+    }
+  }
+
+  @Get('blogId:/posts')
+  async getPostsForSpecifiedBlog(
+    @Query() query: PaginationQueryTypeForPostsAndComments,
+    @Param() blogId: string,
+    @Headers('authorization') id: string,
+  ) {
+    const userId = null;
+    const foundBlog: BlogsTypes | null = await this.blogsService.getBlogById(
+      blogId,
+    );
+
+    if (foundBlog) {
+      const pagination = getPaginationFromQueryPostsAndComments(query);
+      return await this.blogsService.getPostsForBlog(
+        pagination,
+        foundBlog.id,
+        userId,
+      );
+    } else {
+      throw new NotFoundException();
+    }
+  }
+
+  @Post('blogId:/posts')
+  async createNewPostForSpecificBlog(
+    @Param() blogId: string,
+    @Body() body: PostViewType,
+  ) {
+    const foundBlog: BlogsTypes | null = await this.blogsService.getBlogById(
+      blogId,
+    );
+
+    if (foundBlog) {
+      const newPostsForBlog: PostsTypes<UserLikes> =
+        await this.blogsService.createPostForSpecificBlog(
+          body,
+          blogId,
+          foundBlog.name,
+        );
+
+      return newPostsForBlog;
+    } else {
+      throw new NotFoundException();
+    }
+  }
+
+  @Get('id')
+  async getBlogById(@Param() id: string) {
+    const BlogWithId: BlogsTypes | null = await this.blogsService.getBlogById(
+      id,
+    );
+
+    if (BlogWithId) {
+      return BlogWithId;
+    } else {
+      throw new NotFoundException();
+    }
+  }
+
+  @HttpCode(204)
+  @Put('id')
+  async updateBlogById(@Param() id: string, @Body() body: BlogViewType) {
+    const isUpdated = await this.blogsService.updateBlog(body, id);
+
+    if (!isUpdated) {
+      throw new NotFoundException();
+    }
+  }
+
+  @HttpCode(204)
+  @Delete('id')
+  async deleteBlogById(@Param() id: string) {
+    const isDelete = await this.blogsService.deleteBlogById(id);
+
+    if (!isDelete) {
+      throw new NotFoundException();
+    }
+  }
+}

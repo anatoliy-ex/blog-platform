@@ -14,3 +14,16 @@ export type OutputType<T> = {
   totalCount: number;
   items: T;
 };
+
+export type BlogViewType = {
+  name: string;
+  description: string;
+  websiteUrl: string;
+};
+
+export type PostPutViewModel = {
+  title: string;
+  shortDescription: string;
+  content: string;
+  blogId: string;
+};

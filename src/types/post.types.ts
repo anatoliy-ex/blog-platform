@@ -49,3 +49,10 @@ export type ViewTypePost<T> = {
     newestLikes: T[];
   };
 };
+
+export type PostViewType = {
+  title: string;
+  shortDescription: string;
+  content: string;
+  blogId: string;
+};

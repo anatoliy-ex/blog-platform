@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PaginationQueryTypeForUsers } from '../pagination/user.pagination';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, mongo } from 'mongoose';
 import { UserDbSchema, UserDocument } from '../shame/user.Schema';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class UsersRepositories {
     @InjectModel(UserDbSchema.name)
     private userModel: Model<UserDocument>,
   ) {}
-  allUsers(paginationUsers: PaginationQueryTypeForUsers) {
+  async allUsers(paginationUsers: PaginationQueryTypeForUsers) {
     const filter = {
       $or: [
         { login: { $regex: paginationUsers.searchLoginTerm, $options: 'i' } },
@@ -18,15 +18,15 @@ export class UsersRepositories {
       ],
     };
 
-    const users = this.userModel
-      .find(filter)
-      .select('-_id _hash')
+    const users = await this.userModel
+      .find(filter, { __v: 0, _id: 0, hash: 0 })
       .sort({ [paginationUsers.sortBy]: paginationUsers.sortDirection })
       .skip((paginationUsers.pageNumber - 1) * paginationUsers.pageSize)
-      .limit(paginationUsers.pageSize)
-      .lean();
+      .limit(paginationUsers.pageSize);
 
-    const countOfUsers: any = this.userModel.countDocuments(filter);
+    console.log(users);
+
+    const countOfUsers: any = await this.userModel.countDocuments(filter);
     const pagesCount = Math.ceil(countOfUsers / paginationUsers.pageSize);
     console.log(countOfUsers);
 
@@ -39,9 +39,9 @@ export class UsersRepositories {
     };
   }
 
-  createUser(newUser: any) {
+  async createUser(newUser: any) {
     //: Promise<UserViewType>
-    this.userModel.insertMany([newUser]);
+    await this.userModel.insertMany([newUser]);
 
     return {
       id: newUser.id,
@@ -52,8 +52,9 @@ export class UsersRepositories {
   }
 
   async deleteUserById(userId: string): Promise<boolean> {
-    const result = await this.userModel.deleteOne({ id: userId, __v: 0 });
-    console.log(result);
-    return !!result;
+    const result: mongo.DeleteResult = await this.userModel.deleteOne({
+      id: userId,
+    });
+    return result.deletedCount === 1;
   }
 }
