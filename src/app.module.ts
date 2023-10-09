@@ -17,7 +17,6 @@ import { CommentService } from './service/comment.service';
 import { UserDbSchema, UserSchema } from './shame/user.Schema';
 import { CommentOut, CommentSchema } from './shame/comment.Schema';
 import { settings } from '../.env/settings';
-import { TestingController } from './controllers/testing.controller';
 import { TestingRepositories } from './repositories/testing.repositories';
 import { AllDataRepositories } from './repositories/all-data.repositories';
 import { AllDataController } from './controllers/all-data.controller';
@@ -69,7 +68,6 @@ import {
     BlogsController,
     CommentController,
     PostsController,
-    TestingController,
     AllDataController,
   ],
   providers: [
