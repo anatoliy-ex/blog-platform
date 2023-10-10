@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Post,
   Query,
@@ -19,19 +20,19 @@ export class UserController {
   constructor(protected usersService: UsersService) {}
 
   @Get()
-  getAllUsers(@Query() query: PaginationQueryTypeForUsers) {
+  async getAllUsers(@Query() query: PaginationQueryTypeForUsers) {
     const paginationUsers = getPaginationFromQueryUsers(query);
-    return this.usersService.allUsers(paginationUsers);
+    return await this.usersService.allUsers(paginationUsers);
   }
 
   @Post()
-  createUser(@Body() inputModel: InputUserType) {
-    return this.usersService.createNewUser(inputModel);
+  async createUser(@Body() inputModel: InputUserType) {
+    return await this.usersService.createNewUser(inputModel);
   }
 
+  @HttpCode(204)
   @Delete(':id')
-  deleteUserById(@Param('id') userId: string) {
-    console.log(userId);
-    return this.usersService.deleteUserById(userId);
+  async deleteUserById(@Param('id') userId: string) {
+    await this.usersService.deleteUserById(userId);
   }
 }
