@@ -117,8 +117,16 @@ export class BlogsRepositories {
     return newPost;
   }
 
-  async getBlogById(blogId: string) {
-    return this.blogModel.findOne({ id: blogId }, { projection: { _id: 0 } });
+  async getBlogById(blogId: string): Promise<BlogsTypes | null> {
+    const blog = await this.blogModel
+      .findOne({ id: blogId })
+      .select('-_id -__v');
+    console.log(blog);
+    if (blog) {
+      return blog;
+    } else {
+      return null;
+    }
   }
 
   async updateBlog(newBlog: BlogViewType, id: string) {

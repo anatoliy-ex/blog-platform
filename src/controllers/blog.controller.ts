@@ -46,7 +46,7 @@ export class BlogsController {
     }
   }
 
-  @Get('blogId:/posts')
+  @Get(':blogId/posts')
   async getPostsForSpecifiedBlog(
     @Query() query: PaginationQueryTypeForPostsAndComments,
     @Param() blogId: string,
@@ -69,7 +69,7 @@ export class BlogsController {
     }
   }
 
-  @Post('blogId:/posts')
+  @Post(':blogId/posts')
   async createNewPostForSpecificBlog(
     @Param() blogId: string,
     @Body() body: PostViewType,
@@ -92,8 +92,9 @@ export class BlogsController {
     }
   }
 
-  @Get('id')
-  async getBlogById(@Param() id: string) {
+  @Get(':id')
+  async getBlogById(@Param('id') id: any) {
+    console.log(id);
     const BlogWithId: BlogsTypes | null = await this.blogsService.getBlogById(
       id,
     );
@@ -106,8 +107,8 @@ export class BlogsController {
   }
 
   @HttpCode(204)
-  @Put('id')
-  async updateBlogById(@Param() id: string, @Body() body: BlogViewType) {
+  @Put(':id')
+  async updateBlogById(@Param('id') id: string, @Body() body: BlogViewType) {
     const isUpdated = await this.blogsService.updateBlog(body, id);
 
     if (!isUpdated) {
@@ -116,8 +117,8 @@ export class BlogsController {
   }
 
   @HttpCode(204)
-  @Delete('id')
-  async deleteBlogById(@Param() id: string) {
+  @Delete(':id')
+  async deleteBlogById(@Param('id') id: string) {
     const isDelete = await this.blogsService.deleteBlogById(id);
 
     if (!isDelete) {

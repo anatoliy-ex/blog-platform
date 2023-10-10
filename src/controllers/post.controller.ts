@@ -34,7 +34,7 @@ export class PostsController {
   @HttpCode(200)
   @Get(':postId/comments')
   async getCommentsForPost(
-    @Param() postId: string,
+    @Param('id') postId: string,
     @Headers('authorization') userIdView: string | null,
     @Query() query: PaginationQueryTypeForPostsAndComments,
   ) {
@@ -113,7 +113,7 @@ export class PostsController {
 
   @HttpCode(200)
   @Get(':id')
-  async getPostById(@Param() postId: string) {
+  async getPostById(@Param('id') postId: string) {
     const userId = null;
 
     const PostWithId = await this.postsService.getPostById(postId, userId);
@@ -128,7 +128,7 @@ export class PostsController {
   @HttpCode(204)
   @Put(':id')
   async updatePostById(
-    @Param() postId: string,
+    @Param('id') postId: string,
     @Body() body: PostPutViewModel,
   ) {
     const userId = null;
@@ -146,7 +146,7 @@ export class PostsController {
 
   @HttpCode(204)
   @Delete(':id')
-  async deletePostById(@Param() postId: string) {
+  async deletePostById(@Param('id') postId: string) {
     const isDelete = await this.postsService.deletePostsById(postId);
 
     if (!isDelete) {

@@ -94,7 +94,12 @@ export class BlogsService {
 
   //get blog bu ID+++
   async getBlogById(id: string): Promise<BlogsTypes | null> {
-    return await this.blogsRepositories.getBlogById(id);
+    const blog = await this.blogsRepositories.getBlogById(id);
+    if (blog) {
+      return blog;
+    } else {
+      return null;
+    }
   }
 
   //update blog by ID+++
