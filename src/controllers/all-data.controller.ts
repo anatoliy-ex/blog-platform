@@ -1,12 +1,12 @@
 import { Controller, Delete, HttpCode } from '@nestjs/common';
 import { AllDataRepositories } from '../repositories/all-data.repositories';
 
-@Controller('all-data')
+@Controller('testing')
 export class AllDataController {
   constructor(protected allDataRepositories: AllDataRepositories) {}
 
   @HttpCode(204)
-  @Delete()
+  @Delete('all-data')
   deleteAllData() {
     return this.allDataRepositories.deleteAllData();
   }
