@@ -114,7 +114,6 @@ export class BlogsRepositories {
 
   async createPostForSpecificBlog(newPost: PostsTypes<UserLikes>) {
     await this.postModel.create({ ...newPost });
-    return newPost;
   }
 
   async getBlogById(blogId: string): Promise<BlogsTypes | null> {

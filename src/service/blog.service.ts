@@ -89,7 +89,8 @@ export class BlogsService {
       },
     };
 
-    return this.blogsRepositories.createPostForSpecificBlog(newPost);
+    await this.blogsRepositories.createPostForSpecificBlog(newPost);
+    return newPost;
   }
 
   //get blog bu ID+++
