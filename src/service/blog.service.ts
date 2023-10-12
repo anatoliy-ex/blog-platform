@@ -70,7 +70,7 @@ export class BlogsService {
     post: PostViewType,
     blogId: string,
     blogName: string,
-  ): Promise<PostsTypes<UserLikes>> {
+  ) {
     const now = new Date();
 
     const newPost = {
@@ -97,8 +97,7 @@ export class BlogsService {
       },
     };
 
-    await this.blogsRepositories.createPostForSpecificBlog(newPost);
-    return newPost;
+    return this.blogsRepositories.createPostForSpecificBlog(newPost);
   }
 
   //get blog bu ID+++

@@ -80,12 +80,11 @@ export class BlogsController {
     );
 
     if (foundBlog) {
-      const newPostsForBlog: PostsTypes<UserLikes> =
-        await this.blogsService.createPostForSpecificBlog(
-          body,
-          blogId,
-          foundBlog.name,
-        );
+      const newPostsForBlog = await this.blogsService.createPostForSpecificBlog(
+        body,
+        blogId,
+        foundBlog.name,
+      );
 
       console.log(newPostsForBlog);
       return newPostsForBlog;
