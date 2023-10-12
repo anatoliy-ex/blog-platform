@@ -115,18 +115,17 @@ export class BlogsRepositories {
   //===========|||||
   async createPostForSpecificBlog(newPost: PostsTypes<UserLikes>) {
     await this.postModel.create({ ...newPost });
-    return this.postModel
-      .findOne(
-        { id: newPost.id },
-        { _id: 0, __v: 0, extendedLikesInfo: { _id: 0 } },
-      )
-      .select('-_id -__v');
+    return this.postModel.findOne(
+      { id: newPost.id },
+      { _id: 0, __v: 0, extendedLikesInfo: { _id: 0 } },
+    );
   }
 
   async getBlogById(blogId: string): Promise<BlogsTypes | null> {
-    const blog = await this.blogModel
-      .findOne({ id: blogId })
-      .select('-_id -__v');
+    const blog = await this.blogModel.findOne(
+      { id: blogId },
+      { _id: 0, __v: 0 },
+    );
     if (blog) {
       return blog;
     } else {
