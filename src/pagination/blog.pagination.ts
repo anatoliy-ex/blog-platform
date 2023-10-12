@@ -14,7 +14,7 @@ export const getPaginationFromQueryBlogs = (
   const sortDirection = query.sortDirection === 'asc' ? 'asc' : 'desc';
 
   return {
-    searchNameTerm: query.searchNameTerm ?? ' ',
+    searchNameTerm: query.searchNameTerm ?? '',
     sortBy: query.sortBy ?? 'createdAt',
     sortDirection,
     pageNumber: isNaN(pageNumber) ? 1 : pageNumber,
