@@ -51,20 +51,20 @@ export class BlogsController {
     @Query() query: PaginationQueryTypeForPostsAndComments,
     @Param('blogId') blogId: string,
   ) {
-    console.log(blogId);
     const userId = null;
     const foundBlog: BlogsTypes | null = await this.blogsService.getBlogById(
       blogId,
     );
 
-    console.log(foundBlog);
     if (foundBlog) {
       const pagination = getPaginationFromQueryPostsAndComments(query);
-      return await this.blogsService.getPostsForBlog(
+      const posts = await this.blogsService.getPostsForBlog(
         pagination,
         foundBlog.id,
         userId,
       );
+      console.log(posts);
+      return posts;
     } else {
       throw new NotFoundException();
     }
@@ -87,6 +87,7 @@ export class BlogsController {
           foundBlog.name,
         );
 
+      console.log(newPostsForBlog);
       return newPostsForBlog;
     } else {
       throw new NotFoundException();
