@@ -64,10 +64,11 @@ export class BlogsRepositories {
     const filter = { blogId: { $regex: blogId } };
 
     const postsModel: PostsTypes<UserLikesView>[] = await this.postModel
-      .find(filter, { _id: 0, __v: 0, extendedLikesInfo: { _id: 0 } })
+      .find(filter)
       .sort({ [pagination.sortBy]: pagination.sortDirection })
       .skip((pagination.pageNumber - 1) * pagination.pageSize)
       .limit(pagination.pageSize)
+      .select('-_id -__v -extendedLikesInfo._id')
       .lean();
 
     const posts = [...postsModel];
