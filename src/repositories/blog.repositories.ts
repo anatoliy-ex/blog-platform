@@ -113,13 +113,13 @@ export class BlogsRepositories {
       );
     }
   }
-
+  //===========|||||
   async createPostForSpecificBlog(newPost: PostsTypes<UserLikes>) {
     await this.postModel.create({ ...newPost });
     return this.postModel
       .findOne(
         { id: newPost.id },
-        { _id: 0, __v: 0, extendedLikesInfo: { _id: 0, __v: 0 } },
+        { _id: 0, __v: 0, extendedLikesInfo: { _id: 0 } },
       )
       .select('-_id -__v');
   }

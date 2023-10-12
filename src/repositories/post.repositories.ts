@@ -184,7 +184,7 @@ export class PostsRepositories {
     userId: string | null,
   ): Promise<OutputType<PostsTypes<UserLikesView>[]>> {
     const postsModel: PostsTypes<UserLikesView>[] = await this.postModel
-      .find({})
+      .find({}, { _id: 0, __v: 0, extendedLikesInfo: { _id: 0 } })
       .sort({ [pagination.sortBy]: pagination.sortDirection })
       .skip((pagination.pageNumber - 1) * pagination.pageSize)
       .limit(pagination.pageSize)

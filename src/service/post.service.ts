@@ -1,11 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PostsRepositories } from '../repositories/post.repositories';
-import {
-  LikeStatusesEnum,
-  PostsTypes,
-  PostViewType,
-  UserLikes,
-} from '../types/post.types';
+import { LikeStatusesEnum, PostViewType } from '../types/post.types';
 import { PaginationQueryTypeForPostsAndComments } from '../pagination/post.pagination';
 import { PostPutViewModel } from '../types/blog.types';
 
