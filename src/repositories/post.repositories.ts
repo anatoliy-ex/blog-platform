@@ -188,7 +188,6 @@ export class PostsRepositories {
       .sort({ [pagination.sortBy]: pagination.sortDirection })
       .skip((pagination.pageNumber - 1) * pagination.pageSize)
       .limit(pagination.pageSize)
-      .select('-_id -__v')
       .lean();
 
     const countOfPosts = await this.postModel.countDocuments();
