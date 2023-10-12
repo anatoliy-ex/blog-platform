@@ -31,7 +31,7 @@ export class BlogsRepositories {
 
     const blogs: BlogsTypes[] = await this.blogModel
       .find(filter)
-      .select('-_id')
+      .select('-_id - __v')
       .sort({ [pagination.sortBy]: pagination.sortDirection })
       .skip((pagination.pageNumber - 1) * pagination.pageSize)
       .limit(pagination.pageSize)

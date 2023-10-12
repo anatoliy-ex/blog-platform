@@ -72,7 +72,7 @@ export class BlogsController {
 
   @Post(':blogId/posts')
   async createNewPostForSpecificBlog(
-    @Param('id') blogId: string,
+    @Param('blogId') blogId: string,
     @Body() body: PostViewType,
   ) {
     const foundBlog: BlogsTypes | null = await this.blogsService.getBlogById(
