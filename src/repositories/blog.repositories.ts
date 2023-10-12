@@ -116,10 +116,9 @@ export class BlogsRepositories {
   //===========|||||
   async createPostForSpecificBlog(newPost: PostsTypes<UserLikes>) {
     await this.postModel.create({ ...newPost });
-    return this.postModel.findOne(
-      { id: newPost.id },
-      { _id: 0, __v: 0, extendedLikesInfo: { _id: 0 } },
-    );
+    return this.postModel
+      .findOne({ id: newPost.id })
+      .select('-_id -__v -extendedLikesInfo._id');
   }
 
   async getBlogById(blogId: string): Promise<BlogsTypes | null> {
