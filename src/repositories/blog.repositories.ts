@@ -72,7 +72,7 @@ export class BlogsRepositories {
       .lean();
 
     const posts = [...postsModel];
-
+    console.log('posts:', posts);
     if (userId == null) {
       return posts;
     }
