@@ -259,7 +259,7 @@ export class PostsRepositories {
       .select('-__v -_id');
 
     if (viewPost != null) {
-      return viewPost;
+      return newPost;
     } else {
       return null;
     }

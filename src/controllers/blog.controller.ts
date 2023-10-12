@@ -49,14 +49,15 @@ export class BlogsController {
   @Get(':blogId/posts')
   async getPostsForSpecifiedBlog(
     @Query() query: PaginationQueryTypeForPostsAndComments,
-    @Param() blogId: string,
-    @Headers('authorization') id: string,
+    @Param('blogId') blogId: string,
   ) {
+    console.log(blogId);
     const userId = null;
     const foundBlog: BlogsTypes | null = await this.blogsService.getBlogById(
       blogId,
     );
 
+    console.log(foundBlog);
     if (foundBlog) {
       const pagination = getPaginationFromQueryPostsAndComments(query);
       return await this.blogsService.getPostsForBlog(
@@ -71,7 +72,7 @@ export class BlogsController {
 
   @Post(':blogId/posts')
   async createNewPostForSpecificBlog(
-    @Param() blogId: string,
+    @Param('id') blogId: string,
     @Body() body: PostViewType,
   ) {
     const foundBlog: BlogsTypes | null = await this.blogsService.getBlogById(

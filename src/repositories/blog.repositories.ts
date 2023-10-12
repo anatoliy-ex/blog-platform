@@ -121,7 +121,6 @@ export class BlogsRepositories {
     const blog = await this.blogModel
       .findOne({ id: blogId })
       .select('-_id -__v');
-    console.log(blog);
     if (blog) {
       return blog;
     } else {

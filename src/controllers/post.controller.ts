@@ -99,10 +99,12 @@ export class PostsController {
   @HttpCode(201)
   @Post()
   async createNewPost(@Body() postViewModel: PostViewType) {
+    console.log(postViewModel);
     const foundBlog: any = await this.blogsRepositories.getBlogById(
       postViewModel.blogId,
     );
 
+    console.log(foundBlog);
     if (foundBlog == null) {
       throw new NotFoundException();
     } else {
