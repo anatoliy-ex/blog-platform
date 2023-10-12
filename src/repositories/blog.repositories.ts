@@ -119,7 +119,7 @@ export class BlogsRepositories {
     return this.postModel
       .findOne(
         { id: newPost.id },
-        { _id: 0, __v: 0, extendedLikesInfo: { _id: 0 } },
+        { _id: 0, __v: 0, extendedLikesInfo: { _id: 0, __v: 0 } },
       )
       .select('-_id -__v');
   }
