@@ -8,7 +8,6 @@ import {
   Post,
   Put,
   Query,
-  Headers,
   HttpCode,
 } from '@nestjs/common';
 import { BlogsService } from '../service/blog.service';
@@ -21,7 +20,7 @@ import {
   getPaginationFromQueryPostsAndComments,
   PaginationQueryTypeForPostsAndComments,
 } from '../pagination/post.pagination';
-import { PostsTypes, PostViewType, UserLikes } from '../types/post.types';
+import { PostViewType } from '../types/post.types';
 
 @Controller('blogs')
 export class BlogsController {
@@ -30,6 +29,7 @@ export class BlogsController {
   @Get()
   async getAllBlogs(@Query() query: PaginationQueryTypeForBlogs) {
     const paginationBlogs = getPaginationFromQueryBlogs(query);
+    console.log(paginationBlogs);
     return await this.blogsService.allBlogs(paginationBlogs);
   }
 

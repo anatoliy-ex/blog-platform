@@ -91,9 +91,11 @@ export class PostsController {
   @Get()
   async getAllPosts(@Query() query: PaginationQueryTypeForPostsAndComments) {
     // const userId = req.user ? req.user.id : null;
+    console.log(query);
     const userId = null;
-    const pagination = getPaginationFromQueryPostsAndComments(query);
-    return await this.postsService.allPosts(pagination, userId);
+    const paginationPosts = getPaginationFromQueryPostsAndComments(query);
+    console.log(paginationPosts);
+    return await this.postsService.allPosts(paginationPosts, userId);
   }
 
   @HttpCode(201)

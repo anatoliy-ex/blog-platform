@@ -88,10 +88,10 @@ export class BlogsService {
         newestLikes: [
           {
             addedAt: now.toISOString(),
-            userId: '-',
-            login: '-',
-            likeStatus: 'none',
-            postId: '-',
+            userId: ' ',
+            login: ' ',
+            likeStatus: LikeStatusesEnum.None,
+            postId: ' ',
           },
         ],
       },

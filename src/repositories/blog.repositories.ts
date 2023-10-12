@@ -30,12 +30,14 @@ export class BlogsRepositories {
     };
 
     const blogs: BlogsTypes[] = await this.blogModel
-      .find(filter)
+      .find(filter, { _id: 0, __v: 0, extendedLikesInfo: { _id: 0 } })
       .select('-_id - __v')
       .sort({ [pagination.sortBy]: pagination.sortDirection })
       .skip((pagination.pageNumber - 1) * pagination.pageSize)
       .limit(pagination.pageSize)
       .lean();
+
+    console.log(blogs);
 
     const countOfBlogs = await this.blogModel.countDocuments(filter);
     const pagesCount = Math.ceil(countOfBlogs / pagination.pageSize);
@@ -62,7 +64,7 @@ export class BlogsRepositories {
     const filter = { blogId: { $regex: blogId } };
 
     const postsModel: PostsTypes<UserLikesView>[] = await this.postModel
-      .find(filter, { projection: { _id: 0 } })
+      .find(filter, { _id: 0, __v: 0, extendedLikesInfo: { _id: 0 } })
       .sort({ [pagination.sortBy]: pagination.sortDirection })
       .skip((pagination.pageNumber - 1) * pagination.pageSize)
       .limit(pagination.pageSize)
@@ -114,7 +116,12 @@ export class BlogsRepositories {
 
   async createPostForSpecificBlog(newPost: PostsTypes<UserLikes>) {
     await this.postModel.create({ ...newPost });
-    return this.postModel.findOne({ id: newPost.id }).select('-_id -__v');
+    return this.postModel
+      .findOne(
+        { id: newPost.id },
+        { _id: 0, __v: 0, extendedLikesInfo: { _id: 0 } },
+      )
+      .select('-_id -__v');
   }
 
   async getBlogById(blogId: string): Promise<BlogsTypes | null> {
