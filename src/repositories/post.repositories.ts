@@ -268,7 +268,7 @@ export class PostsRepositories {
   //get post by ID
   async getPostById(postId: string, userId?: string | null) {
     const postModel: PostsTypes<UserLikesView> | null = await this.postModel
-      .findOne({ id: postId })
+      .findOne({ id: postId }, { extendedLikesInfo: { _id: 0 } })
       .select('-_id -__v')
       .lean();
 
