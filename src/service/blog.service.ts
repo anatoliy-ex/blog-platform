@@ -80,15 +80,7 @@ export class BlogsService {
         likesCount: 0,
         dislikesCount: 0,
         myStatus: LikeStatusesEnum.None,
-        newestLikes: [
-          {
-            addedAt: now.toISOString(),
-            userId: ' ',
-            login: ' ',
-            likeStatus: LikeStatusesEnum.None,
-            postId: ' ',
-          },
-        ],
+        newestLikes: [],
       },
     };
 
