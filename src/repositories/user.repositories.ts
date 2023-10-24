@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PaginationQueryTypeForUsers } from '../pagination/user.pagination';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, mongo } from 'mongoose';
-import { UserDbSchema, UserDocument } from '../shame/user.Schema';
+import { UserDbSchema, UserDocument } from '../schema/user.Schema';
 
 @Injectable()
 export class UsersRepositories {

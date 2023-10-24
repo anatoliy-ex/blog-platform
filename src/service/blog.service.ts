@@ -5,7 +5,7 @@ import { BlogsTypes, BlogViewType } from '../types/blog.types';
 import { PaginationQueryTypeForPostsAndComments } from '../pagination/post.pagination';
 import { PaginationQueryTypeForBlogs } from '../pagination/blog.pagination';
 import { InjectModel } from '@nestjs/mongoose';
-import { PostDbSchema, PostDocument } from '../shame/post.Schema';
+import { PostDbSchema, PostDocument } from '../schema/post.Schema';
 import { Model } from 'mongoose';
 
 @Injectable()

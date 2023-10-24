@@ -5,13 +5,13 @@ import { PaginationQueryTypeForPostsAndComments } from '../pagination/post.pagin
 import { PostsTypes, UserLikes, UserLikesView } from '../types/post.types';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, mongo } from 'mongoose';
-import { BlogDbSchema, BlogDocument } from '../shame/blog.Schema';
-import { PostDbSchema, PostDocument } from '../shame/post.Schema';
-import { LikeStatusesEnum } from '../shame/comment.Schema';
+import { BlogDbSchema, BlogDocument } from '../schema/blog.Schema';
+import { PostDbSchema, PostDocument } from '../schema/post.Schema';
+import { LikeStatusesEnum } from '../schema/comment.Schema';
 import {
   LikeStatusForPostDbSchema,
   LikeStatusForPostDocument,
-} from '../shame/like.status.for.post.Schema';
+} from '../schema/like.status.for.post.Schema';
 
 @Injectable()
 export class BlogsRepositories {
@@ -113,7 +113,7 @@ export class BlogsRepositories {
       );
     }
   }
-  //===========|||||
+
   async createPostForSpecificBlog(newPost: PostsTypes<UserLikes>) {
     await this.postModel.create({ ...newPost });
     return this.postModel

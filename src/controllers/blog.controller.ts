@@ -9,6 +9,7 @@ import {
   Put,
   Query,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { BlogsService } from '../service/blog.service';
 import {
@@ -21,6 +22,7 @@ import {
   PaginationQueryTypeForPostsAndComments,
 } from '../pagination/post.pagination';
 import { PostViewType } from '../types/post.types';
+import { AuthGuard } from '../auth.guard';
 
 @Controller('blogs')
 export class BlogsController {
@@ -33,6 +35,7 @@ export class BlogsController {
     return await this.blogsService.allBlogs(paginationBlogs);
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   async createNewBlog(@Body() blogViewModel: BlogViewType) {
     const newBlog: BlogsTypes = await this.blogsService.createNewBlog(
@@ -70,6 +73,7 @@ export class BlogsController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Post(':blogId/posts')
   async createNewPostForSpecificBlog(
     @Param('blogId') blogId: string,
@@ -107,6 +111,7 @@ export class BlogsController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @HttpCode(204)
   @Put(':id')
   async updateBlogById(@Param('id') id: string, @Body() body: BlogViewType) {
@@ -117,6 +122,7 @@ export class BlogsController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @HttpCode(204)
   @Delete(':id')
   async deleteBlogById(@Param('id') id: string) {

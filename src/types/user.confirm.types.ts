@@ -1,3 +1,5 @@
+import { IsEmail, Length } from 'class-validator';
+
 export type UserConfirmTypes = {
   id: string;
   login: string;
@@ -18,15 +20,23 @@ export type UserIsNotConfirmTypes = {
   expirationDate: number | Date;
 };
 
-export type InputUserType = {
+export class InputUserType {
+  @Length(5)
   login: string;
+  @Length(6)
   password: string;
+  @IsEmail()
   email: string;
-};
+}
 
 export type UserViewType = {
   id: string;
   login: string;
   email: string;
   createdAt: string;
+};
+
+export type exceptionObjectType = {
+  message: string;
+  field: string;
 };

@@ -1,4 +1,4 @@
-import { LikeStatusesEnum } from '../shame/comment.Schema';
+import { LikeStatusesEnum } from '../schema/comment.Schema';
 
 export type UserConfirmTypes = {
   id: string;

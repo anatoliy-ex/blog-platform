@@ -14,28 +14,41 @@ import { CommentRepositories } from './repositories/comment.repositories';
 import { CommentService } from './service/comment.service';
 //import { BlogsRepositories } from './repositories/blog.repositories';
 //import { BlogsService } from './service/blog.service';
-import { UserDbSchema, UserSchema } from './shame/user.Schema';
-import { CommentOut, CommentSchema } from './shame/comment.Schema';
+import { UserDbSchema, UserSchema } from './schema/user.Schema';
+import { CommentOut, CommentSchema } from './schema/comment.Schema';
 import { settings } from '../.env/settings';
 import { TestingRepositories } from './repositories/testing.repositories';
 import { AllDataRepositories } from './repositories/all-data.repositories';
 import { AllDataController } from './controllers/all-data.controller';
-import { BlogDbSchema, BlogSchema } from './shame/blog.Schema';
+import { BlogDbSchema, BlogSchema } from './schema/blog.Schema';
 import { BlogsRepositories } from './repositories/blog.repositories';
 import { BlogsService } from './service/blog.service';
 import { BlogsController } from './controllers/blog.controller';
 import { PostsController } from './controllers/post.controller';
 import { PostsRepositories } from './repositories/post.repositories';
 import { PostsService } from './service/post.service';
-import { PostDbSchema, PostSchema } from './shame/post.Schema';
+import { PostDbSchema, PostSchema } from './schema/post.Schema';
 import {
   LikeStatusForPostDbSchema,
   LikeStatusForPostSchema,
-} from './shame/like.status.for.post.Schema';
+} from './schema/like.status.for.post.Schema';
 import {
   LikeStatusForCommentDbSchema,
   LikeStatusForCommentSchema,
-} from './shame/like.status.for.comment.Schema';
+} from './schema/like.status.for.comment.Schema';
+import { JwtTokenService } from './service/jwt.token.service';
+import {
+  PasswordRecoveryDbSchema,
+  PasswordRecoverySchema,
+} from './schema/password.recovery.Schema';
+import {
+  UserNotConfirmationDbSchema,
+  UserNotConfirmationSchema,
+} from './schema/user.not.confirmation.Schema';
+import {
+  RefreshTokenSessionDbSchema,
+  RefreshTokenSessionSchema,
+} from './schema/refresh.token.session.Schema';
 
 @Module({
   imports: [
@@ -61,6 +74,24 @@ import {
         schema: LikeStatusForCommentSchema,
       },
     ]),
+    MongooseModule.forFeature([
+      {
+        name: PasswordRecoveryDbSchema.name,
+        schema: PasswordRecoverySchema,
+      },
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: UserNotConfirmationDbSchema.name,
+        schema: UserNotConfirmationSchema,
+      },
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: RefreshTokenSessionDbSchema.name,
+        schema: RefreshTokenSessionSchema,
+      },
+    ]),
   ],
   controllers: [
     AppController,
@@ -82,6 +113,7 @@ import {
     BlogsService,
     TestingRepositories,
     AllDataRepositories,
+    JwtTokenService,
   ],
 })
 export class AppModule {}

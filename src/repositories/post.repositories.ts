@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { BlogDbSchema, BlogDocument } from '../shame/blog.Schema';
+import { BlogDbSchema, BlogDocument } from '../schema/blog.Schema';
 import { Model, mongo } from 'mongoose';
-import { PostDbSchema, PostDocument } from '../shame/post.Schema';
+import { PostDbSchema, PostDocument } from '../schema/post.Schema';
 import {
   LikeStatusForPostDbSchema,
   LikeStatusForPostDocument,
-} from '../shame/like.status.for.post.Schema';
+} from '../schema/like.status.for.post.Schema';
 import {
   CommentDocument,
   CommentOut,
   LikeStatusesEnum,
-} from '../shame/comment.Schema';
-import { UserDbSchema, UserDocument } from '../shame/user.Schema';
+} from '../schema/comment.Schema';
+import { UserDbSchema, UserDocument } from '../schema/user.Schema';
 import {
   TypeCommentatorInfo,
   TypeLikeAndDislikeInfo,
@@ -25,7 +25,7 @@ import { PostPutViewModel, OutputType } from '../types/blog.types';
 import {
   LikeStatusForCommentDbSchema,
   LikeStatusForCommentDocument,
-} from '../shame/like.status.for.comment.Schema';
+} from '../schema/like.status.for.comment.Schema';
 
 @Injectable()
 export class PostsRepositories {
