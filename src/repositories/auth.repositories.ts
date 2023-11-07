@@ -19,7 +19,7 @@ import * as bcrypt from 'bcrypt';
 import { v4 as uuid4 } from 'uuid';
 import nodemailer from 'nodemailer';
 import add from 'date-fns/add';
-import { PasswordRecoveryDocument } from '../schema/password.recovery.Schema';
+import {PasswordRecoveryDbSchema, PasswordRecoveryDocument} from '../schema/password.recovery.Schema';
 import {
   InputUserType,
   UserConfirmTypes,
@@ -34,7 +34,13 @@ import {
 export class AuthUsersRepositories {
   private jwtTokenService: JwtTokenService;
 
-  constructor(,
+  constructor(
+      @InjectModel(UserDbSchema.name)
+      private userModel: Model<UserDocument>,
+      @InjectModel(PasswordRecoveryDbSchema.name)
+      private passwordRecoveryModel: Model<PasswordRecoveryDocument>,
+      @InjectModel(UserNotConfirmationDbSchema.name)
+      private userNotConfirmationModel: Model<UserNotConfirmationDocument>,
   ) {}
   //login users
   async loginUser(authUser: LoginType) {
