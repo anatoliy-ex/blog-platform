@@ -18,6 +18,7 @@ export class UsersRepositories {
       ],
     };
 
+
     const users = await this.userModel
       .find(filter, { __v: 0, _id: 0, hash: 0 })
       .sort({ [paginationUsers.sortBy]: paginationUsers.sortDirection })
